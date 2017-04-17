@@ -15,7 +15,7 @@ function isStatic(resource){
 var server = http.createServer(function(req, res){
 	var urlObj = url.parse(req.url);
 	console.log(req.method + '\t\t' + urlObj.pathname);
-	
+
 	if (isStatic(urlObj.pathname)){
 		var resourcePath = path.join(__dirname, urlObj.pathname);
 		if (!fs.existsSync(resourcePath)){
@@ -54,3 +54,10 @@ var server = http.createServer(function(req, res){
 });
 
 server.listen(8080);
+
+/*
+serveStatic
+dataParser
+calculatorHandler
+notFoundHandler
+*/
