@@ -1,4 +1,5 @@
+var chalk = require('chalk');
 module.exports = function(req, res, next){
-	console.log(req.method + '\t' + req.pathname);
+	console.log(chalk.bold.blue(req.method) + '\t' + chalk.red(req.pathname));
 	next();
 };
