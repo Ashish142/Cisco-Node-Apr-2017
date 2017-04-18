@@ -9,27 +9,21 @@ function isStatic(resource){
 	return staticExtns.indexOf(extn) !== -1;
 }
 
-module.exports = function(req, res){
-	if (isStatic(req.pathname)){
-		var resourcePath = path.join(__dirname, req.pathname);
-		if (!fs.existsSync(resourcePath)){
-			res.statusCode = 404;
-			res.end();
-			return;
+function isValid(resourcePath){
+	return isStatic(resourcePath) && fs.existsSync(resourcePath);
+}
+
+module.exports = function(publicResourcePath){
+	return function(req, res, next){
+		var resourcePath = path.join(publicResourcePath, req.pathname);
+		if (isValid(resourcePath)){
+			var stream  = fs.createReadStream(resourcePath)
+			stream.pipe(res);
+			stream.on('end', function(){
+				next();
+			});
+		} else {
+			next();
 		}
-		console.log(resourcePath + ' -> exists!!');
-		//fs.createReadStream(resourcePath).pipe(res);
-		var stream = fs.createReadStream(resourcePath);
-		stream.on('open', function(){
-			console.log('[@serveStatic] file opened for serving');
-		});
-		stream.on('data', function(chunk){
-			console.log('[@serveStatic] - data event triggered');
-			res.write(chunk);
-		});
-		stream.on('end', function(){
-			console.log('[@serveStatic] - end event triggered');
-			res.end();
-		})
 	}
 }

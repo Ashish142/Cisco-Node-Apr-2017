@@ -65,7 +65,11 @@ function f4Async(next){
 	}, 3000);
 }
 
+
 /*
+f1Async()
+f2Async()
+
 function runAsync(){
 	f1Async(function(){
 		f2Async(function(){
@@ -78,7 +82,16 @@ function runAsync(){
 */
 var asyncFns = [f1Async, f2Async, f3Async, f4Async];
 function runAsync(){
-
+	function exec(asyncFns){
+		var first = asyncFns[0],
+			remaining = asyncFns.slice(1),
+			next = function(){
+				exec(remaining);
+			};
+		if (typeof first === 'function')
+			first(next);
+	}
+	exec(asyncFns);
 }
 
 
