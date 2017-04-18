@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart" : "npm install",
-    "start": "node ./bin/www"
+    "prestart": "npm install",
+    "start": "node ./bin/www",
+    "watch" : "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -14,5 +15,8 @@
     "hbs": "~4.0.1",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

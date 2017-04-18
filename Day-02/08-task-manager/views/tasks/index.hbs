@@ -1,0 +1,18 @@
+<h1>Task Manager</h1>
+<hr>
+<div>{{tasks.length}} tasks are found!!</div>
+<ol>
+	{{#each tasks}}
+		<li>
+			{{#if this.isCompleted}}
+				<span  class="completed">{{this.name}}</span>
+			{{else}}
+				<span>{{this.name}}</span>
+			{{/if}}
+			<form class="toggle" action="/tasks/toggle/{{this.id}}" method="post">
+				<input type="submit" value="Toggle">
+			</form>
+		</li>
+	{{/each}}
+</ol>
+<a href="/tasks/new">Create New</a>
